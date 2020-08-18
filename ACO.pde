@@ -11,8 +11,11 @@ int cellSqrt = 25;
 Shape currTrack;
 ArrayList<Shape> tracks = new ArrayList<Shape>();
 Boolean select=false; 
+Boolean selectExit = false;
 Node selected;
 char label = 'A';
+char labelNode = '0';
+Node oldExitNode;
 
 void settings() {
   size(1200, 675);
@@ -67,7 +70,7 @@ void mouseMoved() {
 void mousePressed() {
   if (mouseButton == RIGHT){
     select = false;
-    Node x = new Node("New",quantizedMouse.x,quantizedMouse.y);
+    Node x = new Node(labelNode++,quantizedMouse.x,quantizedMouse.y,"");
     addNode(x);
   }
   if(mouseButton == LEFT){
@@ -76,17 +79,30 @@ void mousePressed() {
       if(search==-1){
         println("bukan node!");
       }else{
-        Node x = Nodes.get(search); 
-        selected = x;
-        select = true;
-        println("Node-"+search+" dipilih");
+        if(selectExit){
+          if(oldExitNode!=null){
+            oldExitNode.tipe = "";
+          }
+          Node x = Nodes.get(search); 
+          x.tipe = "EXIT";
+          oldExitNode = x;
+          println("Node-"+x.label);
+          selectExit=false;
+        }else{
+          Node x = Nodes.get(search); 
+          selected = x;
+          select = true;
+          println("Node-"+search+" dipilih");
+        }
       }
     }else{
       Node start = selected;
-      Node end = new Node("New",quantizedMouse.x,quantizedMouse.y);
+      Node end = new Node(labelNode++,quantizedMouse.x,quantizedMouse.y,"");
       addNode(end);
-      Track p = new Track(Character.toString(label),start.x,start.y,end.x,end.y); 
-      addTrack(p);
+      Track newTrack = new Track(Character.toString(label),start.x,start.y,end.x,end.y);
+      Track reverseNewTrack = new Track(Character.toString(label),end.x,end.y,start.x,start.y);
+      addTrack(newTrack);
+      addTrack(reverseNewTrack);
       select = false;
     }
    }
@@ -94,10 +110,15 @@ void mousePressed() {
 
 void keyPressed(){
   if(key == CODED){
-    
     }else{
       if(key == ' '){
         chooseTrack(Nodes.get(0));
+      }
+      if(key == 'x'){
+        print("Pilih Exit Node : ");
+        selectExit = true;
+        
+        //chooseTrack(Nodes.get(0));
       }
     }
   
@@ -106,32 +127,42 @@ void keyPressed(){
 void chooseTrack(Node start){
     ArrayList<Integer> result = new ArrayList<Integer>();
     //Node start = Nodes.get(0);
-    Point vtx = new Point(start.x,start.y);
+    Point vtx = new Point(start.x,start.y); //node
     int i = currTrack.getVertexCount();
    // currTrack.removeVertex(i);
     currTrack.addVertex(i, vtx);
+    tabuList.add(start);
     
-    result = searchTrack(start); 
-   // println(result.size()); 
+    if(start.tipe != "EXIT"){
+      result = searchTrack(start); 
+      // println(result.size()); 
    
-    if(result.size()>0){
-      //println(result.size());
-      int choose = int(random(0,result.size()));
-      Track x = Tracks.get(result.get(choose));
-      print(x.label);
-      print("->");
-      int chooseNode = searchNode(x.endX,x.endY);
-      chooseTrack(Nodes.get(chooseNode)); //rekursif sampai ketemu node ujung
+      if(result.size()>0){
+        //println(result.size());
+        int choose = int(random(0,result.size()));
+        Track x = Tracks.get(result.get(choose));
+        print(x.label);
+        print("->");
+        int chooseNode = searchNode(x.endX,x.endY);
+        chooseTrack(Nodes.get(chooseNode)); //rekursif sampai ketemu node ujung
+      }else{
+        println("EXIT");
+        Ants.add(new Ant(currTrack,tabuList));
+        tracks.add(currTrack);
+        //println(tracks);
+        currTrack = new Shape();
+        currTrack.setFill(false);
+        tabuList.clear();
+      }
     }else{
       println("EXIT");
-      Ants.add(new Ant(currTrack));
-      tracks.add(currTrack);
-      //println(tracks);
-      currTrack = new Shape();
-      currTrack.setFill(false);
+        Ants.add(new Ant(currTrack,tabuList));
+        tracks.add(currTrack);
+        //println(tracks);
+        currTrack = new Shape();
+        currTrack.setFill(false);
+        tabuList.clear();
     }
-    
-    
 }
 
 void drawDot(float strokeWeight, int c, float x, float y) {

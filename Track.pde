@@ -16,7 +16,10 @@ ArrayList<Integer> searchTrack(Node x){
   int i= 0 ;
   for(Track t:Tracks){
     if(t.startX==x.x && t.startY == x.y){
-      listTrack.add(i);
+      //search node (t.endX && t.endY) yang belum ada di tabu list 
+      if(searchNodeTabu(t.endX,t.endY)==-1){
+        listTrack.add(i);
+      }
     }
     i++;
   }

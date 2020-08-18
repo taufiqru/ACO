@@ -1,7 +1,8 @@
-ArrayList<Ant> Ants = new ArrayList<Ant>();
+  ArrayList<Ant> Ants = new ArrayList<Ant>();
 
 
 class Ant {
+  ArrayList<Node> tabuList = new ArrayList<Node>();
   Path track;
   Point pt;
   float u, du, length1D;
@@ -9,12 +10,13 @@ class Ant {
   boolean finish =false;
   boolean announce = false;
   
-  Ant(Path track) {
+  Ant(Path track,ArrayList<Node> tabuList) {
     this.track = track;   
     this.u = 0;
     this.du = 1 / track.getLength();
     this.length1D = 25 / track.getLength();
     this.pt = new Point(0, 0);  
+    this.tabuList = tabuList;
    
   }
   
