@@ -1,5 +1,6 @@
 import tracer.*;
 import tracer.paths.*;
+import static javax.swing.JOptionPane.*;
 
 //mouse locked to grid
 Point quantizedMouse;
@@ -99,8 +100,9 @@ void mousePressed() {
       Node start = selected;
       Node end = new Node(labelNode++,quantizedMouse.x,quantizedMouse.y,"");
       addNode(end);
-      Track newTrack = new Track(Character.toString(label),start.x,start.y,end.x,end.y);
-      Track reverseNewTrack = new Track(Character.toString(label),end.x,end.y,start.x,start.y);
+      float dist =  inputDistance();
+      Track newTrack = new Track(Character.toString(label),start.x,start.y,end.x,end.y,dist);
+      Track reverseNewTrack = new Track(Character.toString(label),end.x,end.y,start.x,start.y,dist);
       addTrack(newTrack);
       addTrack(reverseNewTrack);
       select = false;
@@ -173,7 +175,7 @@ void drawDot(float strokeWeight, int c, float x, float y) {
 
 void drawGrid(int cellSqrt) {
   strokeWeight(1);
-  stroke(0, 100);
+  stroke(0, 25);
 
   int x = 0;
   while (x < width) {
@@ -193,4 +195,24 @@ static float quantize(float val, float min, float quantum) {
   val /= quantum;
   val = round(val);
   return min + val * quantum;
+}
+
+float inputDistance(){
+  String input;
+  String string = "1";
+  do {
+      input = showInputDialog("Masukkan Jarak ");
+      if(input!=null){
+          if (input.matches("^[0-9]*$")) {
+            string = input;
+        } else {
+           showMessageDialog(null,"Please enter a valid numbers");
+        }
+      }else{
+        input = "1";
+        string = input;
+      }
+      
+  } while (!input.matches("^[0-9]*$"));
+  return parseInt(string);
 }

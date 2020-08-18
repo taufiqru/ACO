@@ -36,20 +36,21 @@ void addTrack(Track x){
 }
 
 class Track{
- float startX,startY,endX,endY;
+ float startX,startY,endX,endY,distance;
  String label;
  
- Track(String label,float sX,float sY, float eX, float eY){
+ Track(String label,float sX,float sY, float eX, float eY, float distance){
    this.label = label;
    this.startX = sX;
    this.startY = sY;
    this.endX = eX;
    this.endY = eY;
+   this.distance = distance;
  }
  
  void draw(){
   textSize(12);
-  text(label,((endX+startX)/2)-5,((endY+startY)/2)-10); 
+  text(label +"= "+distance,((endX+startX)/2)-5,((endY+startY)/2)-10); 
   stroke(0,0,0,50);
   strokeWeight(3);
   //fill(255,255,0);
