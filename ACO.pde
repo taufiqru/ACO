@@ -1,6 +1,7 @@
 import tracer.*;
 import tracer.paths.*;
 import static javax.swing.JOptionPane.*;
+import java.util.*; 
 
 //mouse locked to grid
 Point quantizedMouse;
@@ -118,7 +119,7 @@ void keyPressed(){
       }
       if(key == 'x'){
         print("Pilih Exit Node : ");
-        selectExit = true;
+        selectExit = true; 
         
         //chooseTrack(Nodes.get(0));
       }
@@ -136,12 +137,13 @@ void chooseTrack(Node start){
     tabuList.add(start);
     
     if(start.tipe != "EXIT"){
-      result = searchTrack(start); 
+      result = searchTrack(start); // hasil -> list daftar track yang dapat dilalui
       // println(result.size()); 
    
       if(result.size()>0){
         //println(result.size());
-        int choose = int(random(0,result.size()));
+        int choose = int(random(0,result.size())); // pilih secara random
+        
         Track x = Tracks.get(result.get(choose));
         print(x.label);
         print("->");
@@ -201,7 +203,7 @@ float inputDistance(){
   String input;
   String string = "1";
   do {
-      input = showInputDialog("Masukkan Jarak ");
+      input = showInputDialog("Input Distance :");
       if(input!=null){
           if (input.matches("^[0-9]*$")) {
             string = input;
