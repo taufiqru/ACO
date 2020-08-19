@@ -37,6 +37,7 @@ void addTrack(Track x){
 
 class Track{
  float startX,startY,endX,endY,distance;
+ float pheromone;
  String label;
  
  Track(String label,float sX,float sY, float eX, float eY, float distance){
@@ -46,6 +47,7 @@ class Track{
    this.endX = eX;
    this.endY = eY;
    this.distance = distance;
+   this.pheromone = 1;
  }
  
  void draw(){
