@@ -8,6 +8,7 @@ Point quantizedMouse;
 
 //grid
 int cellSqrt = 25;
+float rho = 1;
 
 //tracks
 Shape currTrack;
@@ -142,9 +143,9 @@ void chooseTrack(Node start){
    
       if(result.size()>0){
         //println(result.size());
-        int choose = int(random(0,result.size())); // pilih secara random
-        
-        Track x = Tracks.get(result.get(choose));
+        //int choose = int(random(0,result.size())); // pilih secara random
+        int choose = algoACO(result); ///formula ACO menentukan track yang akan dilalui
+        Track x = Tracks.get(result.get(choose)); //track yang dilalui sudah ditentukan
         print(x.label);
         print("->");
         int chooseNode = searchNode(x.endX,x.endY);

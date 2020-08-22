@@ -1,10 +1,12 @@
 // Ant Colony Optimization
 
-int ACO(ArrayList<Integer> possibleTrack){
+int algoACO(ArrayList<Integer> possibleTrack){
+  /* didalam possible track ada index dari track yang mungkin di lewati semut*/
   ArrayList<Float> prob = new ArrayList<Float>(); //menampung nilai probabilitas tiap track
-  ArrayList<Float> temp = new ArrayList<Float>(); //copy dari prob untuk roulette wheel
+  
   Track curr;
-  float T,n,total,p ;
+  float T,n,total,p,roullete ;
+  
   total = 0;
   
   
@@ -23,12 +25,41 @@ int ACO(ArrayList<Integer> possibleTrack){
      prob.add(p);
   }
   
-  temp = prob; //copy prob ke temp
-  Collections.sort(temp); //sorting value prob
+  roullete = RoulleteWheel(prob);
+  int count = 0;
+  for (float t:prob){
+    if(t==roullete){
+      return count;
+    }
+    count ++;
+  }
   
-  
-  return 0;
+  return -99;
 }
 
-
 //Roullete wheel
+float RoulleteWheel(ArrayList<Float> prob){
+  ArrayList<Float> temp = new ArrayList<Float>(); //copy dari prob untuk roulette wheel
+  ArrayList<Float> cumSum = new ArrayList<Float>();
+  float rand;
+  
+  temp = prob; //copy prob ke temp
+  
+  Collections.sort(temp); //sorting value prob
+  int i=0;
+  float cum = 1;
+  cumSum.add(parseFloat(1));
+  
+  for(i=0;i<temp.size();i++){
+    cum = cum-temp.get(i);
+    cumSum.add(cum);
+  }
+  rand = random(0.001,1);
+  
+  for(i=0;i<cumSum.size()-1;i++){
+    if(rand<=cumSum.get(i) && rand>=cumSum.get(i+1)){
+      return temp.get(i);
+    }
+  }
+  return -99;
+}
