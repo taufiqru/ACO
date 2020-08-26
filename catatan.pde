@@ -8,7 +8,8 @@ input jarak tempuh [x]
 filter input [x]
 algoritma ACO nya belum [x]
 
-TSP
+TSP [dak jadi, cukup sampe exit]
+
 record jalur yang di lalui + total jarak tempuh
 multiple semut    
 default scenario
