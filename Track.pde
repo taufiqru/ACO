@@ -13,16 +13,19 @@ int searchTrack(Track x){
 }
 
 
-int searchTrack(String label){
+ArrayList<Integer> searchTrack(String label){
+  ArrayList<Integer> listTrack = new ArrayList<Integer>();
   int i = 0;
   for (Track t : Tracks){
+    //println(t.label);
     if(t.label==label){
-     return i;
+     listTrack.add(i);
     }
     i++;
   }
-  return -1;
+  return listTrack;
 }
+
 
 
 ArrayList<Integer> searchTrack(Node x){
@@ -44,7 +47,7 @@ void addTrack(Track x){
   if(searchTrack(x)==-1){
     if(!(x.startX==x.endX && x.startY==x.endY)){
       Tracks.add(x);
-      Track reverseNewTrack = new Track(Character.toString(label),x.endX,x.endY,x.startX,x.startY,x.distance);
+      Track reverseNewTrack = new Track(Character.toString(label)+"-reversed",x.endX,x.endY,x.startX,x.startY,x.distance,"reversed");
       Tracks.add(reverseNewTrack);
     }
   }
@@ -53,10 +56,14 @@ void addTrack(Track x){
 
 class Track{
  float startX,startY,endX,endY,distance;
- float pheromone;
- String label;
+ double pheromone;
+ String label,tipe;
  
- Track(String label,float sX,float sY, float eX, float eY, float distance){
+ Textlabel myTextlabel;
+ 
+ 
+ Track(String label,float sX,float sY, float eX, float eY, float distance,String tipe){
+   this.tipe = tipe;
    this.label = label;
    this.startX = sX;
    this.startY = sY;
@@ -64,22 +71,31 @@ class Track{
    this.endY = eY;
    this.distance = distance;
    this.pheromone = 1;
+   this.setup();
+ }
+ 
+ void setup(){
+    String txt="";
+    //txt = label +"= "+distance+", ph = "+this.pheromone;
+    myTextlabel = cp5.addTextlabel("track-"+this.label)
+                    .setText(txt)
+                    .setPosition(((endX+startX)/2)-5,((endY+startY)/2)-20)
+                    .setColorValue(0x000000)
+                    .setFont(createFont("Georgia",12))
+                    ;
  }
  
  void draw(){
-  
-  textSize(12);
-  String txt;
-  txt = label +"= "+distance+", ph = "+this.pheromone;
-  text(txt,((endX+startX)/2)-5,((endY+startY)/2)-10); 
   stroke(0,0,0,50);
   strokeWeight(3);
-  //fill(255,255,0);
   line(startX,startY,endX,endY);
  }
  
- void updateVal(){
-   text("",((endX+startX)/2)-5,((endY+startY)/2)-10);
+ void updateString(){
+    String txt;
+    txt = label +"= "+distance+", ph = "+this.pheromone;
+    myTextlabel.setValue(txt);
  }
+ 
  
 }

@@ -12,7 +12,7 @@ int algoACO(ArrayList<Integer> possibleTrack){
   /* total distance*/
   for (int t : possibleTrack){
      curr = Tracks.get(t);
-     T = curr.pheromone;
+     T = (float)curr.pheromone;
      n = 1/curr.distance;
      total = total+T*n;
   }
@@ -20,7 +20,7 @@ int algoACO(ArrayList<Integer> possibleTrack){
   /*probabilitas masing" track*/
   for (int t : possibleTrack){
      curr = Tracks.get(t);
-     T = curr.pheromone;
+     T = (float)curr.pheromone;
      n = 1/curr.distance;
      p = T*n/total;
      prob.add(p);
@@ -68,8 +68,14 @@ float RoulleteWheel(ArrayList<Float> prob){
 //update feromon
 void updatePheromone(ArrayList<Track> tabuTracks,float totalDistance){
   Track temp;
+  int idx=-99;
   for(Track t:tabuTracks){
-   temp=Tracks.get(searchTrack(t.label));
-   temp.pheromone = (1-rho)*temp.pheromone + temp.pheromone/totalDistance;
+   idx = searchTrack(t);
+   temp=Tracks.get(idx);
+   temp.pheromone = (1-rho)*temp.pheromone + 1/totalDistance + temp.pheromone;
+   for(int x: searchTrack(t.label)){
+     Tracks.get(x).pheromone = Math.round(temp.pheromone*100)/100.0d; //pembulatan jumlah feromone supaya digit tidak terlalu panjang
+   }
+   
   }
 }

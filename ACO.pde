@@ -1,11 +1,12 @@
 import tracer.*;
+import controlP5.*;
 import tracer.paths.*;
 import static javax.swing.JOptionPane.*;
 import java.util.*; 
 
+ControlP5 cp5;
 //mouse locked to grid
 Point quantizedMouse;
-
 //grid
 int cellSqrt = 25;
 float rho = 1;
@@ -25,6 +26,7 @@ void settings() {
 }
 
 void setup() {
+  cp5 = new ControlP5(this);
   noCursor();  
   currTrack = new Shape();
   currTrack.setFill(false);
@@ -33,6 +35,7 @@ void setup() {
 }
 
 void draw() {
+  //background(0);
   background(255);
   drawGrid(cellSqrt);
   drawDot(5, color(0), mouseX, mouseY);
@@ -48,8 +51,10 @@ void draw() {
   }
   
   for (Track t : Tracks) {
-    t.updateVal();
+   if(t.tipe=="origin"){
     t.draw();
+    t.updateString();
+   }
   }
   
   for (Ant t : Ants) {
@@ -104,7 +109,7 @@ void mousePressed() {
       Node end = new Node(labelNode++,quantizedMouse.x,quantizedMouse.y,"");
       addNode(end);
       float dist =  inputDistance();
-      Track newTrack = new Track(Character.toString(label),start.x,start.y,end.x,end.y,dist);
+      Track newTrack = new Track(Character.toString(label),start.x,start.y,end.x,end.y,dist,"origin");
       addTrack(newTrack);
       select = false;
     }
