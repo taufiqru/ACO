@@ -48,6 +48,7 @@ void draw() {
   }
   
   for (Track t : Tracks) {
+    t.updateVal();
     t.draw();
   }
   
@@ -104,9 +105,7 @@ void mousePressed() {
       addNode(end);
       float dist =  inputDistance();
       Track newTrack = new Track(Character.toString(label),start.x,start.y,end.x,end.y,dist);
-      Track reverseNewTrack = new Track(Character.toString(label),end.x,end.y,start.x,start.y,dist);
       addTrack(newTrack);
-      addTrack(reverseNewTrack);
       select = false;
     }
    }
@@ -146,27 +145,34 @@ void chooseTrack(Node start){
         //int choose = int(random(0,result.size())); // pilih secara random
         int choose = algoACO(result); ///formula ACO menentukan track yang akan dilalui
         Track x = Tracks.get(result.get(choose)); //track yang dilalui sudah ditentukan
+        tabuTracks.add(x);
         print(x.label);
         print("->");
         int chooseNode = searchNode(x.endX,x.endY);
         chooseTrack(Nodes.get(chooseNode)); //rekursif sampai ketemu node ujung
       }else{
         println("EXIT");
-        Ants.add(new Ant(currTrack,tabuList));
+        Ant a = new Ant(currTrack,tabuList,tabuTracks);
+        Ants.add(a);
+        println("distance : "+a.totalDistance());
+        updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
         tracks.add(currTrack);
-        //println(tracks);
         currTrack = new Shape();
         currTrack.setFill(false);
         tabuList.clear();
+        tabuTracks.clear();
       }
     }else{
       println("EXIT");
-        Ants.add(new Ant(currTrack,tabuList));
-        tracks.add(currTrack);
-        //println(tracks);
-        currTrack = new Shape();
-        currTrack.setFill(false);
-        tabuList.clear();
+      Ant a = new Ant(currTrack,tabuList,tabuTracks);
+      Ants.add(a);
+      println("distance : "+a.totalDistance());
+      updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
+      tracks.add(currTrack);
+      currTrack = new Shape();
+      currTrack.setFill(false);
+      tabuList.clear();
+      tabuTracks.clear();
     }
 }
 

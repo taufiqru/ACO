@@ -3,6 +3,7 @@
 
 class Ant {
   ArrayList<Node> tabuList = new ArrayList<Node>();
+  ArrayList<Track> tabuTracks = new ArrayList<Track>();
   Path track;
   Point pt;
   float u, du, length1D;
@@ -10,14 +11,14 @@ class Ant {
   boolean finish =false;
   boolean announce = false;
   
-  Ant(Path track,ArrayList<Node> tabuList) {
+  Ant(Path track,ArrayList<Node> tabuList,ArrayList<Track> tabuTracks) {
     this.track = track;   
     this.u = 0;
     this.du = 1 / track.getLength();
     this.length1D = 25 / track.getLength();
     this.pt = new Point(0, 0);  
     this.tabuList = tabuList;
-   
+    this.tabuTracks = tabuTracks;
   }
   
   void step() {
@@ -43,4 +44,13 @@ class Ant {
       //v = Path.remainder(v - 1.25*length1D, 1);
       //println(v);
   }
+  
+  float totalDistance(){
+    float total=0;
+    for(Track t:tabuTracks){
+      total = total+t.distance;
+    }
+    return total;
+  }
+  
 }

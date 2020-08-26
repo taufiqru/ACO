@@ -1,4 +1,5 @@
 ArrayList<Track> Tracks = new ArrayList<Track>();
+ArrayList<Track> tabuTracks = new ArrayList<Track>();
 
 int searchTrack(Track x){
   int i = 0;
@@ -10,6 +11,19 @@ int searchTrack(Track x){
   }
   return -1;
 }
+
+
+int searchTrack(String label){
+  int i = 0;
+  for (Track t : Tracks){
+    if(t.label==label){
+     return i;
+    }
+    i++;
+  }
+  return -1;
+}
+
 
 ArrayList<Integer> searchTrack(Node x){
   ArrayList<Integer> listTrack = new ArrayList<Integer>();
@@ -30,6 +44,8 @@ void addTrack(Track x){
   if(searchTrack(x)==-1){
     if(!(x.startX==x.endX && x.startY==x.endY)){
       Tracks.add(x);
+      Track reverseNewTrack = new Track(Character.toString(label),x.endX,x.endY,x.startX,x.startY,x.distance);
+      Tracks.add(reverseNewTrack);
     }
   }
   label++;
@@ -51,12 +67,19 @@ class Track{
  }
  
  void draw(){
+  
   textSize(12);
-  text(label +"= "+distance,((endX+startX)/2)-5,((endY+startY)/2)-10); 
+  String txt;
+  txt = label +"= "+distance+", ph = "+this.pheromone;
+  text(txt,((endX+startX)/2)-5,((endY+startY)/2)-10); 
   stroke(0,0,0,50);
   strokeWeight(3);
   //fill(255,255,0);
   line(startX,startY,endX,endY);
+ }
+ 
+ void updateVal(){
+   text("",((endX+startX)/2)-5,((endY+startY)/2)-10);
  }
  
 }
