@@ -7,6 +7,12 @@ int algoACO(ArrayList<Integer> possibleTrack){
   Track curr;
   float T,n,total,p,roullete ;
   
+  //
+  String jarak="0";
+  String Prob="0";
+  String formula="";
+  //
+  
   total = 0;
   
   /* total distance*/
@@ -15,16 +21,24 @@ int algoACO(ArrayList<Integer> possibleTrack){
      T = (float)curr.pheromone;
      n = 1/curr.distance;
      total = total+T*n;
+     jarak = jarak+"+"+T+"x"+"1/"+curr.distance;
+     
   }
   
   /*probabilitas masing" track*/
   for (int t : possibleTrack){
      curr = Tracks.get(t);
+     println(curr.label);
      T = (float)curr.pheromone;
      n = 1/curr.distance;
      p = T*n/total;
      prob.add(p);
+     Prob = T+"x"+1+"/"+curr.distance;
+     formula = "("+Prob+")/"+jarak+"="+p;
+     println(formula);
   }
+  
+ 
   
   roullete = RoulleteWheel(prob);
   int count = 0;
@@ -40,28 +54,48 @@ int algoACO(ArrayList<Integer> possibleTrack){
 
 //Roullete wheel
 float RoulleteWheel(ArrayList<Float> prob){
+  //
+  String rolet="";
+  //
+  
   ArrayList<Float> temp = new ArrayList<Float>(); //copy dari prob untuk roulette wheel
   ArrayList<Float> cumSum = new ArrayList<Float>();
   float rand;
   
   temp = prob; //copy prob ke temp
+  Comparator c = Collections.reverseOrder();
+  Collections.sort(temp,c); //sorting value prob
   
-  Collections.sort(temp); //sorting value prob
+  for(float f:temp){
+    print(f+"|");
+  }
+  println("");
+  
   int i=0;
   float cum = 1;
+  rolet = rolet+cum+"|";
+  
   cumSum.add(parseFloat(1));
   
   for(i=0;i<temp.size();i++){
     cum = cum-temp.get(i);
+    rolet = rolet+cum+"|";
     cumSum.add(cum);
   }
+  
+  print(rolet);
+  println("");
+  
   rand = random(0.001,1);
+  
+  println("nilai random : "+rand);
   
   for(i=0;i<cumSum.size()-1;i++){
     if(rand<=cumSum.get(i) && rand>=cumSum.get(i+1)){
       return temp.get(i);
     }
   }
+  
   return -99;
 }
 

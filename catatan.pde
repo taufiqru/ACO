@@ -6,7 +6,6 @@ exit node[x]
 labelnode [x]
 input jarak tempuh [x]
 filter input [x]
-
 algoritma ACO nya belum [x]
 
 TSP

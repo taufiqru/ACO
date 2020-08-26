@@ -1,4 +1,4 @@
-  ArrayList<Ant> Ants = new ArrayList<Ant>();
+ ArrayList<Ant> Ants = new ArrayList<Ant>();
 
 
 class Ant {
@@ -41,9 +41,7 @@ class Ant {
       rotate(atan2(0,0));
       ellipse(0,0,3,3);
       popMatrix();
-      //v = Path.remainder(v - 1.25*length1D, 1);
-      //println(v);
-  }
+   }
   
   float totalDistance(){
     float total=0;

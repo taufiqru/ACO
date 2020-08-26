@@ -47,7 +47,7 @@ void addTrack(Track x){
   if(searchTrack(x)==-1){
     if(!(x.startX==x.endX && x.startY==x.endY)){
       Tracks.add(x);
-      Track reverseNewTrack = new Track(Character.toString(label)+"-reversed",x.endX,x.endY,x.startX,x.startY,x.distance,"reversed");
+      Track reverseNewTrack = new Track(Character.toString(label),x.endX,x.endY,x.startX,x.startY,x.distance,"reversed");
       Tracks.add(reverseNewTrack);
     }
   }
@@ -76,8 +76,7 @@ class Track{
  
  void setup(){
     String txt="";
-    //txt = label +"= "+distance+", ph = "+this.pheromone;
-    myTextlabel = cp5.addTextlabel("track-"+this.label)
+    myTextlabel = cp5.addTextlabel(this.label+"-"+this.tipe)
                     .setText(txt)
                     .setPosition(((endX+startX)/2)-5,((endY+startY)/2)-20)
                     .setColorValue(0x000000)

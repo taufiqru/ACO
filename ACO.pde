@@ -31,11 +31,9 @@ void setup() {
   currTrack = new Shape();
   currTrack.setFill(false);
   quantizedMouse = new Point(quantize(mouseX, 0, cellSqrt), quantize(mouseY, 0, cellSqrt));
- // currTrack.addVertex(quantizedMouse);
 }
 
 void draw() {
-  //background(0);
   background(255);
   drawGrid(cellSqrt);
   drawDot(5, color(0), mouseX, mouseY);
@@ -60,7 +58,7 @@ void draw() {
   for (Ant t : Ants) {
     if(t.finish){
      if(t.announce==false){
-       println("semut-"+Ants.indexOf(t)+" selesai!");
+      // println("semut-"+Ants.indexOf(t)+" selesai!");
        t.announce=true;
       }
     }else{
@@ -125,9 +123,7 @@ void keyPressed(){
       if(key == 'x'){
         print("Pilih Exit Node : ");
         selectExit = true; 
-        
-        //chooseTrack(Nodes.get(0));
-      }
+       }
     }
   
 }
@@ -143,23 +139,21 @@ void chooseTrack(Node start){
     
     if(start.tipe != "EXIT"){
       result = searchTrack(start); // hasil -> list daftar track yang dapat dilalui
-      // println(result.size()); 
-   
       if(result.size()>0){
-        //println(result.size());
         //int choose = int(random(0,result.size())); // pilih secara random
         int choose = algoACO(result); ///formula ACO menentukan track yang akan dilalui
         Track x = Tracks.get(result.get(choose)); //track yang dilalui sudah ditentukan
+        println("memilih jalur :"+x.label);
         tabuTracks.add(x);
-        print(x.label);
-        print("->");
+       // print(x.label);
+       // print("->");
         int chooseNode = searchNode(x.endX,x.endY);
         chooseTrack(Nodes.get(chooseNode)); //rekursif sampai ketemu node ujung
       }else{
-        println("EXIT");
+       // println("EXIT");
         Ant a = new Ant(currTrack,tabuList,tabuTracks);
         Ants.add(a);
-        println("distance : "+a.totalDistance());
+       // println("distance : "+a.totalDistance());
         updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
         tracks.add(currTrack);
         currTrack = new Shape();
@@ -168,10 +162,10 @@ void chooseTrack(Node start){
         tabuTracks.clear();
       }
     }else{
-      println("EXIT");
+    //  println("EXIT");
       Ant a = new Ant(currTrack,tabuList,tabuTracks);
       Ants.add(a);
-      println("distance : "+a.totalDistance());
+   //   println("distance : "+a.totalDistance());
       updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
       tracks.add(currTrack);
       currTrack = new Shape();

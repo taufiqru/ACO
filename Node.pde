@@ -59,7 +59,6 @@ class Node{
         fill(255,0,0);
       }
       text(label,x-15,y-5);
-      //strokeWeight(12);
       ellipseMode(CENTER);
       ellipse(x,y,10,10);
       fill(255,0,0);
