@@ -4,8 +4,15 @@ import tracer.paths.*;
 import static javax.swing.JOptionPane.*;
 import java.util.*; 
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
+
 //Variables//
-float rho = 1;
+float rho = 1.0;
+int alpha=1;
+int beta =1;
 //
 
 
@@ -31,6 +38,8 @@ void settings() {
 
 void setup() {
   cp5 = new ControlP5(this);
+  cf = new ControlFrame(this,300,800,"Controls");
+  surface.setLocation(320,10);
   noCursor();  
   currTrack = new Shape();
   currTrack.setFill(false);
@@ -59,6 +68,7 @@ void draw() {
    }
   }
   
+  //if(finish){
   for (Ant t : Ants) {
     if(t.finish){
      if(t.announce==false){
@@ -70,7 +80,7 @@ void draw() {
       t.draw(g);
     }
   }
- 
+  //}
 }
 
 void mouseMoved() {
@@ -155,8 +165,8 @@ void chooseTrack(Node start){
       }else{
         Ant a = new Ant(currTrack,tabuList,tabuTracks);
         Ants.add(a);
-         //debug
-        printAlgoStep();
+        //debug
+        //  printAlgoStep();
         printTracks(a);
         //
         updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
@@ -165,13 +175,14 @@ void chooseTrack(Node start){
         currTrack.setFill(false);
         tabuList.clear();
         tabuTracks.clear();
+        
        
       }
     }else{
       Ant a = new Ant(currTrack,tabuList,tabuTracks);
       Ants.add(a);
-      //debug
-      printAlgoStep();
+       //debug
+     // printAlgoStep();
       printTracks(a);
       //
       updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
@@ -180,7 +191,7 @@ void chooseTrack(Node start){
       currTrack.setFill(false);
       tabuList.clear();
       tabuTracks.clear();
-      
+     
     }
 }
 

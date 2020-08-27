@@ -12,9 +12,10 @@ record jalur yang di lalui + total jarak tempuh[x]
 
 
 Future Updates :
-multiple semut (Auto)    
+jalur terbaik + visual
+GUI
+multiple semut (Auto)    // belum mungkin dilakukan, karena diproses secara paralel terjadi bentrokan memori
 default scenario
-jalur terbaik
 
 
 Pending :
