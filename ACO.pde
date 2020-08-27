@@ -4,12 +4,16 @@ import tracer.paths.*;
 import static javax.swing.JOptionPane.*;
 import java.util.*; 
 
+//Variables//
+float rho = 1;
+//
+
+
 ControlP5 cp5;
 //mouse locked to grid
 Point quantizedMouse;
 //grid
 int cellSqrt = 25;
-float rho = 1;
 
 //tracks
 Shape currTrack;
@@ -118,6 +122,7 @@ void keyPressed(){
   if(key == CODED){
     }else{
       if(key == ' '){
+        algoStep.add("Step by step Semut-"+(Ants.size()+1)+":");
         chooseTrack(Nodes.get(0));
       }
       if(key == 'x'){
@@ -140,38 +145,42 @@ void chooseTrack(Node start){
     if(start.tipe != "EXIT"){
       result = searchTrack(start); // hasil -> list daftar track yang dapat dilalui
       if(result.size()>0){
-        //int choose = int(random(0,result.size())); // pilih secara random
+        //int choose = int(random(0,result.size())); // pilih secara random gak pake ACO
         int choose = algoACO(result); ///formula ACO menentukan track yang akan dilalui
         Track x = Tracks.get(result.get(choose)); //track yang dilalui sudah ditentukan
-        println("memilih jalur :"+x.label);
+        algoStep.add("memilih jalur :"+x.label); //debug
         tabuTracks.add(x);
-       // print(x.label);
-       // print("->");
         int chooseNode = searchNode(x.endX,x.endY);
         chooseTrack(Nodes.get(chooseNode)); //rekursif sampai ketemu node ujung
       }else{
-       // println("EXIT");
         Ant a = new Ant(currTrack,tabuList,tabuTracks);
         Ants.add(a);
-       // println("distance : "+a.totalDistance());
+         //debug
+        printAlgoStep();
+        printTracks(a);
+        //
         updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
         tracks.add(currTrack);
         currTrack = new Shape();
         currTrack.setFill(false);
         tabuList.clear();
         tabuTracks.clear();
+       
       }
     }else{
-    //  println("EXIT");
       Ant a = new Ant(currTrack,tabuList,tabuTracks);
       Ants.add(a);
-   //   println("distance : "+a.totalDistance());
+      //debug
+      printAlgoStep();
+      printTracks(a);
+      //
       updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
       tracks.add(currTrack);
       currTrack = new Shape();
       currTrack.setFill(false);
       tabuList.clear();
       tabuTracks.clear();
+      
     }
 }
 
