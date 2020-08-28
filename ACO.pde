@@ -173,8 +173,10 @@ void chooseTrack(Node start){
         Ant a = new Ant(currTrack,tabuList,tabuTracks);
         Ants.add(a);
         //debug
-          printAlgoStep();
-        printTracks(a);
+          //printAlgoStep();
+          logTracks(a);
+          printLogTracks();
+          resetLog();
         //
         updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
         tracks.add(currTrack);
@@ -189,8 +191,10 @@ void chooseTrack(Node start){
       Ant a = new Ant(currTrack,tabuList,tabuTracks);
       Ants.add(a);
        //debug
-      printAlgoStep();
-      printTracks(a);
+      //printAlgoStep();
+      logTracks(a);
+      printLogTracks();
+      resetLog();
       //
       updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
       tracks.add(currTrack);

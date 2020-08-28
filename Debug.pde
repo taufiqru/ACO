@@ -1,7 +1,9 @@
 //notes//
 ArrayList<String> algoStep = new ArrayList<String>();
+ArrayList<String> stepTracks = new ArrayList<String>();
 ArrayList<String> listOfBestRoute = new ArrayList<String>();
 ArrayList<String> listOflabel = new ArrayList<String>();
+ArrayList<String> saveLog = new ArrayList<String>();
 
 ArrayList<Track> bestRoutes = new ArrayList<Track>();
 //Shape currBestRoute;
@@ -16,16 +18,41 @@ void printAlgoStep(){
   }
 }
 
+void printLogTracks(){
+  for(String x:stepTracks){
+    println(x);
+  }
+}
 
-void printTracks(Ant x){
+void resetLog(){
+  saveLog.addAll(algoStep);
+  saveLog.addAll(stepTracks);
+  saveLog.add("\n******************\n");
+  stepTracks.clear();
+  algoStep.clear();
+}
+
+void saveToFile(){
+  String[] record = new String[saveLog.size()];
+  int i=0;
+  
+  for(String s:saveLog){
+    record[i] = s;
+    i++;
+  }
+  saveStrings("aco_log.txt",record);
+  println("Log Simulasi telah disimpan! (aco_log.txt)");
+}
+
+void logTracks(Ant x){
   String jalur="";
-   println("Jalur yang dilalui Semut-"+(Ants.size())+":");
+   stepTracks.add("Jalur yang dilalui Semut-"+(Ants.size())+":");
   for(Track t:x.tabuTracks){
     jalur=jalur+t.label+"->";
   }
-  println(jalur+"EXIT");
+  stepTracks.add(jalur+"EXIT");
   
-  println("Total jarak :"+x.totalDistance());
+  stepTracks.add("Total jarak :"+x.totalDistance());
   if(x.totalDistance()<=shortestPath){
     if(x.totalDistance()==shortestPath){
        shortestPath = x.totalDistance();

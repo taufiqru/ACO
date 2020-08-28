@@ -6,7 +6,7 @@ class ControlFrame extends PApplet{
   Robot robot;
   Textarea consoleTextarea;
   Textarea bestTextarea;
-  Button preset;
+  Button preset,savelog,help;
   int w,h;
   PApplet parent;
   ControlP5 cp5;
@@ -75,13 +75,13 @@ class ControlFrame extends PApplet{
        .setFont(createFont("Arial Bold", 10));
      
      
-     cp5.addButton("Simpan Log")
+   savelog = cp5.addButton("Simpan Log")
        .setValue(0)
        .setPosition(70,172)
        .setSize(80,30)
        .setFont(createFont("Arial Bold", 10));
      
-     cp5.addButton("Bantuan")
+   help = cp5.addButton("Bantuan")
        .setValue(0)
        .setPosition(160,172)
        .setSize(80,30)
@@ -182,6 +182,13 @@ class ControlFrame extends PApplet{
      restart();
      removeCP5();
      loadDataPreset();
+   }
+   if(savelog.isPressed()){
+     saveToFile();
+   }
+   if(help.isPressed()){
+     String txt = "->Klik Kanan untuk membuat Node \n->Untuk membuat Rute, Pilih Node menggunakan Klik Kiri Kemudian Klik Kiri kembali pada lokasi lain \n->Untuk menambahkan semut, tekan tombol Spasi\n->Tombol Preset digunakan untuk menampilkan skenario default";
+     showMessageDialog(null,txt,"How To Use",PLAIN_MESSAGE);
    }
  }
   

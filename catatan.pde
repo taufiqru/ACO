@@ -12,19 +12,19 @@ bug roullete wheel [fix]
 parameter alpha+beta sudah include di formula ACO [ok]
 GUI [ok]
 jalur terbaik visual [ok]
-default scenario (kadang" crash) 
+save log
+help
 
 
 
 Future Updates :
-help
-save log
-hide formula log
 Peta (real case)
 
 
 Pending :
 TSP [dak jadi, cukup sampe exit]
-multiple semut (Auto)    // belum mungkin dilakukan, karena diproses secara paralel terjadi bentrokan memori
+multiple semut (Auto)    // belum mungkin dilakukan, karena diproses secara paralel terjadi bentrokan memori (kadang" crash)
+hide formula log (dak penting?)
+default scenario (kadang" crash)
 
 */

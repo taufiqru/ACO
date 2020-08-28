@@ -15,7 +15,7 @@ int algoACO(ArrayList<Integer> possibleTrack){
   
   total = 0;
   
-  algoStep.add("Memulai pemilihan jalur :");//debug
+  algoStep.add("Memulai pemilihan jalur :\n");//debug
   
   /* total distance*/
   for (int t : possibleTrack){
@@ -74,7 +74,7 @@ double RoulleteWheel(ArrayList<Double> prob){
   ArrayList<Double> cumSum = new ArrayList<Double>();
   double rand;
   
-  algoStep.add("Memulai Roullete Wheel : ");
+  algoStep.add("Memulai Roullete Wheel : \n");
   
   //temp = prob; //copy prob ke temp
   Comparator c = Collections.reverseOrder();
