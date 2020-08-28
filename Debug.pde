@@ -1,6 +1,7 @@
 //notes//
 ArrayList<String> algoStep = new ArrayList<String>();
 ArrayList<String> listOfBestRoute = new ArrayList<String>();
+ArrayList<String> listOflabel = new ArrayList<String>();
 
 ArrayList<Track> bestRoutes = new ArrayList<Track>();
 //Shape currBestRoute;

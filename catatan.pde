@@ -12,14 +12,15 @@ bug roullete wheel [fix]
 parameter alpha+beta sudah include di formula ACO [ok]
 GUI [ok]
 jalur terbaik visual [ok]
+default scenario (kadang" crash) 
 
 
 
 Future Updates :
-default scenario
 help
 save log
 hide formula log
+Peta (real case)
 
 
 Pending :

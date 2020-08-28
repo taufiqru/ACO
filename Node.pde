@@ -4,7 +4,9 @@ ArrayList<Node> tabuList = new ArrayList<Node>();
 void addNode(Node x){
   if(searchNode(x.x,x.y)==-1){
     Nodes.add(x);
+    labelNode++;
   }
+  
 }
 
 boolean sameNode(Node A, Node B){
@@ -39,12 +41,12 @@ int searchNodeTabu(float x,float y){
 }
 
 class Node{
-  char label;
+  String label;
   float x,y;
   int nodeSize=3;
   String tipe;
   
-  Node(char label,float x, float y, String tipe){
+  Node(String label,float x, float y, String tipe){
     this.label = label;
     this.x = x;
     this.y = y;

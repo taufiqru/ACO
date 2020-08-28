@@ -6,6 +6,7 @@ class ControlFrame extends PApplet{
   Robot robot;
   Textarea consoleTextarea;
   Textarea bestTextarea;
+  Button preset;
   int w,h;
   PApplet parent;
   ControlP5 cp5;
@@ -67,7 +68,7 @@ class ControlFrame extends PApplet{
        .setColorValue(0xffffff00)
        .setFont(createFont("Arial Bold", 12));
     
-    cp5.addButton("Preset")
+   preset= cp5.addButton("Preset")
        .setValue(0)
        .setPosition(10,172)
        .setSize(50,30)
@@ -148,34 +149,41 @@ class ControlFrame extends PApplet{
    rho = val;
   }
   
-  void semut(int val){
-   //println("tambah "+val+" semut");
+  
+  
+  void loadDataPreset(){
+    
+   // cp5 = new ControlP5(this);
+    
+    int[][] data = {
+      {325,275,625,75,4},
+      {325,275,625,375,1},
+      {625,375,925,225,3},
+      {625,75,925,225,1},
+      {625,75,625,375,1},
+      {325,275,925,225,7},
+    };
+    
+    for(int i=0;i<data.length;i++){
+      Node start = new Node(Integer.toString(labelNode),data[i][0],data[i][1],"");
+      addNode(start); //start
+      Node end = new Node(Integer.toString(labelNode),data[i][2],data[i][3],"");
+      addNode(end); //end
+      Track newTrack = new Track(Character.toString(label),start.x,start.y,end.x,end.y,data[i][4],"origin");
+      addTrack(newTrack);
+    }
+    
+    Nodes.get(searchNode(925,225)).tipe = "EXIT";
   }
   
-  void Mulai(int val){
-   // if(Nodes.size()>0){
-   //   for(int i=0;i<cp5.getController("semut").getValue();i++){
-   //       robot.keyPress(KeyEvent.VK_SPACE);
-   //        robot.delay(50);
-   //        robot.keyRelease(KeyEvent.VK_SPACE);
-   //   //     //delay((int)random(100,1000));
-   //       }
-   //        finish = true;
-   //}
+ void mousePressed(){
+   if(preset.isPressed()){
+     listCP5();
+     restart();
+     removeCP5();
+     loadDataPreset();
+   }
  }
- 
-// void keyPressed(){
-//  if(key == CODED){
-//    }else{
-//      if(key == ' '){
-//        algoStep.add("Step by step Semut-"+(Ants.size()+1)+":");
-//        chooseTrack(Nodes.get(0));
-//      }
-//      if(key == 'x'){
-//        print("Pilih Exit Node : ");
-//        selectExit = true; 
-//       }
-//    }
   
-//}
+ 
 }

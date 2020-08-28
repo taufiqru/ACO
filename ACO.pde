@@ -29,7 +29,7 @@ Boolean select=false;
 Boolean selectExit = false;
 Node selected;
 char label = 'A';
-char labelNode = '0';
+int labelNode = 1;
 Node oldExitNode;
 
 void settings() {
@@ -37,6 +37,7 @@ void settings() {
 }
 
 void setup() {
+  restart();
   cp5 = new ControlP5(this);
   cf = new ControlFrame(this,300,675,"Controls");
   surface.setLocation(320,10);
@@ -44,6 +45,7 @@ void setup() {
   currTrack = new Shape();
   currTrack.setFill(false);
   quantizedMouse = new Point(quantize(mouseX, 0, cellSqrt), quantize(mouseY, 0, cellSqrt));
+
 }
 
 void draw() {
@@ -95,8 +97,9 @@ void mouseMoved() {
 void mousePressed() {
   if (mouseButton == RIGHT){
     select = false;
-    Node x = new Node(labelNode++,quantizedMouse.x,quantizedMouse.y,"");
+    Node x = new Node(Integer.toString(labelNode),quantizedMouse.x,quantizedMouse.y,"");
     addNode(x);
+    //println(quantizedMouse.x+","+quantizedMouse.y);
   }
   if(mouseButton == LEFT){
     if(!select){
@@ -122,7 +125,8 @@ void mousePressed() {
       }
     }else{
       Node start = selected;
-      Node end = new Node(labelNode++,quantizedMouse.x,quantizedMouse.y,"");
+      Node end = new Node(Integer.toString(labelNode),quantizedMouse.x,quantizedMouse.y,"");
+     // println(quantizedMouse.x+","+quantizedMouse.y);
       addNode(end);
       float dist =  inputDistance();
       Track newTrack = new Track(Character.toString(label),start.x,start.y,end.x,end.y,dist,"origin");
@@ -138,6 +142,7 @@ void keyPressed(){
       if(key == ' '){
         algoStep.add("Step by step Semut-"+(Ants.size()+1)+":");
         chooseTrack(Nodes.get(0));
+        
       }
       if(key == 'x'){
         print("Pilih Exit Node : ");
@@ -245,4 +250,33 @@ float inputDistance(){
       
   } while (!input.matches("^[0-9]*$"));
   return parseInt(string);
+}
+
+void restart(){
+    
+    Nodes.clear();
+    Tracks.clear();
+    Ants.clear();
+    bestRoutes.clear();
+    tracks.clear();
+    tabuTracks.clear();
+    tabuList.clear();
+    label = 'A';
+    labelNode = 1;
+    shortestPath = 99999.0;
+   
+}
+
+void removeCP5(){
+  for(String t:listOflabel){
+    cp5.remove(t);
+  }
+  listOflabel.clear();
+}
+
+void listCP5(){
+  for(Track t:Tracks){
+   listOflabel.add( t.myTextlabel.getLabel());
+  }
+  
 }
