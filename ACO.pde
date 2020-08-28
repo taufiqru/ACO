@@ -38,7 +38,7 @@ void settings() {
 
 void setup() {
   cp5 = new ControlP5(this);
-  cf = new ControlFrame(this,300,800,"Controls");
+  cf = new ControlFrame(this,300,675,"Controls");
   surface.setLocation(320,10);
   noCursor();  
   currTrack = new Shape();
@@ -66,6 +66,10 @@ void draw() {
     t.draw();
     t.updateString();
    }
+  }
+  
+  for (Track t : bestRoutes) {
+    t.drawBestRoute();
   }
   
   //if(finish){
@@ -145,10 +149,8 @@ void keyPressed(){
 
 void chooseTrack(Node start){
     ArrayList<Integer> result = new ArrayList<Integer>();
-    //Node start = Nodes.get(0);
     Point vtx = new Point(start.x,start.y); //node
     int i = currTrack.getVertexCount();
-   // currTrack.removeVertex(i);
     currTrack.addVertex(i, vtx);
     tabuList.add(start);
     
@@ -166,7 +168,7 @@ void chooseTrack(Node start){
         Ant a = new Ant(currTrack,tabuList,tabuTracks);
         Ants.add(a);
         //debug
-        //  printAlgoStep();
+          printAlgoStep();
         printTracks(a);
         //
         updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
@@ -182,7 +184,7 @@ void chooseTrack(Node start){
       Ant a = new Ant(currTrack,tabuList,tabuTracks);
       Ants.add(a);
        //debug
-     // printAlgoStep();
+      printAlgoStep();
       printTracks(a);
       //
       updatePheromone(a.tabuTracks,a.totalDistance());//update feromon

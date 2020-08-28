@@ -61,11 +61,30 @@ class ControlFrame extends PApplet{
        .setSize(100,20)
        .setFont(createFont("Arial Bold", 10));
        
-    //cp5.addTextlabel("Label_Kontrol")
-    //   .setText("Konfigurasi :")
-    //   .setPosition(10,142)
-    //   .setColorValue(0xffffff00)
-    //   .setFont(createFont("Arial Bold", 12));
+    cp5.addTextlabel("Label_Kontrol")
+       .setText("Kontrol :")
+       .setPosition(10,142)
+       .setColorValue(0xffffff00)
+       .setFont(createFont("Arial Bold", 12));
+    
+    cp5.addButton("Preset")
+       .setValue(0)
+       .setPosition(10,172)
+       .setSize(50,30)
+       .setFont(createFont("Arial Bold", 10));
+     
+     
+     cp5.addButton("Simpan Log")
+       .setValue(0)
+       .setPosition(70,172)
+       .setSize(80,30)
+       .setFont(createFont("Arial Bold", 10));
+     
+     cp5.addButton("Bantuan")
+       .setValue(0)
+       .setPosition(160,172)
+       .setSize(80,30)
+       .setFont(createFont("Arial Bold", 10));
     
     //cp5.addTextlabel("Label_tambah")
     //   .setText("Tambah")
@@ -83,12 +102,12 @@ class ControlFrame extends PApplet{
     
      cp5.addTextlabel("Label_Best")
        .setText("Jalur Terpendek :")
-       .setPosition(10,590-22-150-10-22)
+       .setPosition(10,230)
        .setColorValue(0xffffff00)
        .setFont(createFont("Arial Bold", 12));
        
      bestTextarea = cp5.addTextarea("best")
-                   .setPosition(10, (590-22-150-10))
+                   .setPosition(10, 260)
                    .setSize(280, 150)
                    .setFont(createFont("Arial", 10))
                    .setLineHeight(14)
@@ -98,12 +117,12 @@ class ControlFrame extends PApplet{
        
      cp5.addTextlabel("Label_Console")
      .setText("Console Log :")
-     .setPosition(10,(590-22))
+     .setPosition(10,430)
      .setColorValue(0xffffff00)
      .setFont(createFont("Arial Bold", 12));
        
       consoleTextarea = cp5.addTextarea("console")
-                   .setPosition(10, 590)
+                   .setPosition(10, 460)
                    .setSize(280, 200)
                    .setFont(createFont("Arial", 10))
                    .setLineHeight(14)

@@ -1,24 +1,29 @@
 /*
 Recent Updates :
-node berpasangan (X)
-track yang sama tidak bisa d lalui dua kali [Tabu List] [x]
-exit node[x]
-labelnode [x]
-input jarak tempuh [x]
-filter input [x]
-algoritma ACO nya belum [x]
-record jalur yang di lalui + total jarak tempuh[x]
+node berpasangan (ok)
+track yang sama tidak bisa d lalui dua kali [Tabu List] [ok]
+exit node[ok]
+labelnode [ok]
+input jarak tempuh [ok]
+filter input jarak tempuh (only number)[ok]
+algoritma ACO nya belum [ok]
+record jalur yang di lalui + total jarak tempuh[ok]
+bug roullete wheel [fix]
+parameter alpha+beta sudah include di formula ACO [ok]
+GUI [ok]
+jalur terbaik visual [ok]
 
 
 
 Future Updates :
-jalur terbaik + visual
-GUI
-multiple semut (Auto)    // belum mungkin dilakukan, karena diproses secara paralel terjadi bentrokan memori
 default scenario
+help
+save log
+hide formula log
 
 
 Pending :
 TSP [dak jadi, cukup sampe exit]
+multiple semut (Auto)    // belum mungkin dilakukan, karena diproses secara paralel terjadi bentrokan memori
 
 */

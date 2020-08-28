@@ -2,10 +2,10 @@
 
 int algoACO(ArrayList<Integer> possibleTrack){
   /* didalam possible track ada index dari track yang mungkin di lewati semut*/
-  ArrayList<Float> prob = new ArrayList<Float>(); //menampung nilai probabilitas tiap track
+  ArrayList<Double> prob = new ArrayList<Double>(); //menampung nilai probabilitas tiap track
   
   Track curr;
-  float T,n,total,p,roullete ;
+  double T,n,total,p,roullete ;
   
   //
   String jarak="0";
@@ -20,10 +20,10 @@ int algoACO(ArrayList<Integer> possibleTrack){
   /* total distance*/
   for (int t : possibleTrack){
      curr = Tracks.get(t);
-     T = (float)curr.pheromone;
+     T = (double)curr.pheromone;
      n = 1/curr.distance;
-     total = total+T*n;
-     jarak = jarak+"+"+T+"x"+"1/"+curr.distance;
+     total = total+Math.pow(T,alpha)*Math.pow(n,beta);
+     jarak = jarak+"+("+T+")^"+alpha+" x "+"( 1/"+curr.distance+")^"+beta;
      
   }
   
@@ -33,12 +33,13 @@ int algoACO(ArrayList<Integer> possibleTrack){
      //println(curr.label);
      algoStep.add(curr.label); //debug 
      //
-     T = (float)curr.pheromone;
+     T = (double)curr.pheromone;
      n = 1/curr.distance;
-     p = T*n/total;
+     p = Math.pow(T,alpha)*Math.pow(n,beta)/total;
+   //  p = Math.floor(p);
      prob.add(p);
      //debug
-     Prob = T+"x"+1+"/"+curr.distance;
+     Prob = "("+T+")^"+alpha+"x("+1+"/"+curr.distance+")^"+beta;
      formula = "("+Prob+")/"+jarak+"="+p;
      //println(formula);
      algoStep.add(formula);
@@ -49,8 +50,9 @@ int algoACO(ArrayList<Integer> possibleTrack){
   
   roullete = RoulleteWheel(prob);
   int count = 0;
-  for (float t:prob){
+  for (double t:prob){
     if(t==roullete){
+      algoStep.add("memilih :"+t +", opsi :"+count);
       return count;
     }
     count ++;
@@ -60,7 +62,7 @@ int algoACO(ArrayList<Integer> possibleTrack){
 }
 
 //Roullete wheel
-float RoulleteWheel(ArrayList<Float> prob){
+double RoulleteWheel(ArrayList<Double> prob){
   //debug
   String rolet="";
   String val="";
@@ -68,25 +70,27 @@ float RoulleteWheel(ArrayList<Float> prob){
   
   
   
-  ArrayList<Float> temp = new ArrayList<Float>(); //copy dari prob untuk roulette wheel
-  ArrayList<Float> cumSum = new ArrayList<Float>();
-  float rand;
+  ArrayList<Double> temp = new ArrayList<Double>(prob); //copy dari prob untuk roulette wheel
+  ArrayList<Double> cumSum = new ArrayList<Double>();
+  double rand;
   
-  temp = prob; //copy prob ke temp
+  algoStep.add("Memulai Roullete Wheel : ");
+  
+  //temp = prob; //copy prob ke temp
   Comparator c = Collections.reverseOrder();
   Collections.sort(temp,c); //sorting value prob
   
-  for(float f:temp){
+  for(double f:temp){
     val=val+f+"|";
   }
   algoStep.add(val);//debug
   //println("");
   
   int i=0;
-  float cum = 1;
+  double cum = 1;
   rolet = rolet+cum+"|";
   
-  cumSum.add(parseFloat(1));
+  cumSum.add((double)1);
   
   for(i=0;i<temp.size();i++){
     cum = cum-temp.get(i);
@@ -97,12 +101,13 @@ float RoulleteWheel(ArrayList<Float> prob){
   algoStep.add(rolet); //debug
   //println("");
   
-  rand = random(0.001,1);
+  rand = random(0,1);
   
   algoStep.add("nilai random : "+rand);//debug
   
   for(i=0;i<cumSum.size()-1;i++){
-    if(rand<=cumSum.get(i) && rand>=cumSum.get(i+1)){
+    if(rand<cumSum.get(i) && rand>=cumSum.get(i+1)){
+      algoStep.add("berada pada posisi :"+i);
       return temp.get(i);
     }
   }
@@ -111,7 +116,7 @@ float RoulleteWheel(ArrayList<Float> prob){
 }
 
 //update feromon
-void updatePheromone(ArrayList<Track> tabuTracks,float totalDistance){
+void updatePheromone(ArrayList<Track> tabuTracks,double totalDistance){
   Track temp;
   int idx=-99;
   for(Track t:tabuTracks){

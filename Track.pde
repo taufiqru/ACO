@@ -96,5 +96,12 @@ class Track{
     myTextlabel.setValue(txt);
  }
  
+ void drawBestRoute(){
+   stroke(0,255,0);
+   fill(0,255,0);
+   //strokeWeight(12);
+  line(startX,startY,endX,endY);
+ }
+ 
  
 }
