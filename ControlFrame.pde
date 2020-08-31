@@ -187,7 +187,9 @@ class ControlFrame extends PApplet{
      saveToFile();
    }
    if(help.isPressed()){
-     String txt = "->Klik Kanan untuk membuat Node \n->Untuk membuat Rute, Pilih Node menggunakan Klik Kiri Kemudian Klik Kiri kembali pada lokasi lain \n->Untuk menambahkan semut, tekan tombol Spasi\n->Tombol Preset digunakan untuk menampilkan skenario default";
+     String txt = "->Klik Kanan untuk membuat Node \n->Untuk membuat Rute, Pilih Node menggunakan Klik Kiri Kemudian Klik Kiri kembali pada lokasi lain";
+     txt = txt + "\n->Tekan tombol 'X', untuk menentukan titik EXIT (tujuan akhir)";
+     txt = txt + "\n->Untuk menambahkan semut, tekan tombol Spasi\n->Tombol Preset digunakan untuk menampilkan skenario default";
      showMessageDialog(null,txt,"How To Use",PLAIN_MESSAGE);
    }
  }
