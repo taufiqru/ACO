@@ -14,6 +14,7 @@ GUI [ok]
 jalur terbaik visual [ok]
 save log
 help
+multiple exit & entry point [ok]
 
 
 

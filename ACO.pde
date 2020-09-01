@@ -20,26 +20,34 @@ ControlP5 cp5;
 //mouse locked to grid
 Point quantizedMouse;
 //grid
-int cellSqrt = 25;
+int cellSqrt = 5;
 
 //tracks
 Shape currTrack;
 ArrayList<Shape> tracks = new ArrayList<Shape>();
 Boolean select=false; 
 Boolean selectExit = false;
+Boolean selectEntry = false;
 Node selected;
 char label = 'A';
 int labelNode = 1;
 Node oldExitNode;
+PImage bg;
 
 void settings() {
-  size(1200, 675);
+  //size(704, 492); //emergency.png
+  size(1200, 675); //basement.png
+  //800x543
+  //704x492
+  //1200x675
 }
 
 void setup() {
   restart();
   cp5 = new ControlP5(this);
   cf = new ControlFrame(this,300,675,"Controls");
+  bg = loadImage("asset/basement.png");
+  //bg = loadImage("asset/emergency.png");
   surface.setLocation(320,10);
   noCursor();  
   currTrack = new Shape();
@@ -49,7 +57,7 @@ void setup() {
 }
 
 void draw() {
-  background(255);
+  background(bg);
   drawGrid(cellSqrt);
   drawDot(5, color(0), mouseX, mouseY);
   drawDot(10, color(0), quantizedMouse.x, quantizedMouse.y);
@@ -109,14 +117,21 @@ void mousePressed() {
       }else{
         if(selectExit){
           if(oldExitNode!=null){
-            oldExitNode.tipe = "";
+            //oldExitNode.tipe = "";
           }
           Node x = Nodes.get(search); 
           x.tipe = "EXIT";
           oldExitNode = x;
           println("Node-"+x.label);
           selectExit=false;
-        }else{
+        }else if(selectEntry){
+          entryPoint.add(search);
+          Node x = Nodes.get(search);
+          x.tipe = "ENTRY";
+          println("Node-"+x.label);
+          selectEntry = false;
+        }
+        else{
           Node x = Nodes.get(search); 
           selected = x;
           select = true;
@@ -141,13 +156,17 @@ void keyPressed(){
     }else{
       if(key == ' '){
         algoStep.add("Step by step Semut-"+(Ants.size()+1)+":");
-        chooseTrack(Nodes.get(0));
-        
+        int rand = (int)random(0,entryPoint.size());
+        chooseTrack(Nodes.get(entryPoint.get(rand)));
       }
       if(key == 'x'){
-        print("Pilih Exit Node : ");
+        print("Pilih Exit Point : ");
         selectExit = true; 
        }
+      if(key == 's'){
+        print("Pilih Entry Point :");
+        selectEntry = true;
+      } 
     }
   
 }
@@ -170,23 +189,21 @@ void chooseTrack(Node start){
         int chooseNode = searchNode(x.endX,x.endY);
         chooseTrack(Nodes.get(chooseNode)); //rekursif sampai ketemu node ujung
       }else{
-        Ant a = new Ant(currTrack,tabuList,tabuTracks);
-        Ants.add(a);
-        //debug
-          //printAlgoStep();
-          logTracks(a);
-          printLogTracks();
-          resetLog();
-        //
-        updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
-        tracks.add(currTrack);
-        currTrack = new Shape();
-        currTrack.setFill(false);
-        tabuList.clear();
-        tabuTracks.clear();
-        
-       
-      }
+          Ant a = new Ant(currTrack,tabuList,tabuTracks);
+          Ants.add(a);
+          //debug
+            //printAlgoStep();
+            logTracks(a);
+            printLogTracks();
+            resetLog();
+          //
+          updatePheromone(a.tabuTracks,a.totalDistance());//update feromon
+          tracks.add(currTrack);
+          currTrack = new Shape();
+          currTrack.setFill(false);
+          tabuList.clear();
+          tabuTracks.clear();
+        }
     }else{
       Ant a = new Ant(currTrack,tabuList,tabuTracks);
       Ants.add(a);

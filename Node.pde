@@ -1,5 +1,6 @@
 ArrayList<Node> Nodes = new ArrayList<Node>();
 ArrayList<Node> tabuList = new ArrayList<Node>();
+ArrayList<Integer> entryPoint = new ArrayList<Integer>();
 
 void addNode(Node x){
   if(searchNode(x.x,x.y)==-1){
@@ -57,7 +58,10 @@ class Node{
       stroke(0);
       if(tipe=="EXIT"){
         fill(0,0,255);
-      }else{
+      }else if(tipe == "ENTRY"){
+        fill(215,19,229);
+      }
+      else{
         fill(255,0,0);
       }
       text(label,x-15,y-5);
