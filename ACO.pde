@@ -46,7 +46,7 @@ void setup() {
   restart();
   cp5 = new ControlP5(this);
   cf = new ControlFrame(this,300,675,"Controls");
-  bg = loadImage("asset/basement.png");
+  bg = loadImage("asset/basement_.png");
   //bg = loadImage("asset/emergency.png");
   surface.setLocation(320,10);
   noCursor();  
@@ -157,7 +157,10 @@ void keyPressed(){
       if(key == ' '){
         algoStep.add("Step by step Semut-"+(Ants.size()+1)+":");
         int rand = (int)random(0,entryPoint.size());
+        
         chooseTrack(Nodes.get(entryPoint.get(rand)));
+        addShortestEachRoute(Nodes.get(entryPoint.get(rand)));
+        
       }
       if(key == 'x'){
         print("Pilih Exit Point : ");
@@ -284,7 +287,7 @@ void restart(){
     tabuList.clear();
     label = 'A';
     labelNode = 1;
-    shortestPath = 99999.0;
+    //shortestPath = 99999.0;
    
 }
 

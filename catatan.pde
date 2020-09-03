@@ -15,12 +15,15 @@ jalur terbaik visual [ok]
 save log
 help
 multiple exit & entry point [ok]
+Peta (real case)
+multiple best route from different starting point [ok]
 
 
 
 Future Updates :
-Peta (real case)
-
+fire!
+update preset
+more cartoon obj
 
 Pending :
 TSP [dak jadi, cukup sampe exit]
